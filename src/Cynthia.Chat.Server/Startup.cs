@@ -10,10 +10,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Cynthia.Test.Chat.Attributes;
+using Cynthia.Chat.Server.Attributes;
 using System.Reflection;
 
-namespace Cynthia.Test.Chat
+namespace Cynthia.Chat.Server
 {
     public class Startup
     {

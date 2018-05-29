@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Cynthia.Test.Chat.Services;
-using Cynthia.Test.Chat.Models;
+using Cynthia.Chat.Server.Services;
+using Cynthia.Chat.Server.Models;
 
-namespace Cynthia.Test.Chat.Controllers
+namespace Cynthia.Chat.Server.Controllers
 {
     [Route("api/[controller]")]
     public class ChatController : Controller

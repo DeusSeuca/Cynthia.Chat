@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Cynthia.Test.Chat.Attributes;
-using Cynthia.Test.Chat.Models;
+using Cynthia.Chat.Server.Attributes;
+using Cynthia.Chat.Server.Models;
 
-namespace Cynthia.Test.Chat.Services
+namespace Cynthia.Chat.Server.Services
 {
     [Singleton]
     internal class DataService : IDataService

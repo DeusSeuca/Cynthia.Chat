@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Cynthia.Test.Chat.Models;
+using Cynthia.Chat.Server.Models;
 
-namespace Cynthia.Test.Chat.Services
+namespace Cynthia.Chat.Server.Services
 {
     public interface IDataService
     {
