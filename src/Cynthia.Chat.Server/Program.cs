@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace Cynthia.Test.Chat
+namespace Cynthia.Chat.Server
 {
     public class Program
     {
