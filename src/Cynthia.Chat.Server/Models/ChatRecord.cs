@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Cynthia.Test.Chat.Models
+namespace Cynthia.Chat.Server.Models
 {
     public class ChatRecord
     {

@@ -12,6 +12,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Cynthia.Chat.Server.Attributes;
 using System.Reflection;
+using Cynthia.Test.Chat.Attributes;
 
 namespace Cynthia.Chat.Server
 {
