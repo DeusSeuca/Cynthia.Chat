@@ -1,6 +1,6 @@
 using System;
 
-namespace Cynthia.Chat.Server.Models
+namespace Cynthia.Chat.Common.Models
 {
     public class JsonData
     {
