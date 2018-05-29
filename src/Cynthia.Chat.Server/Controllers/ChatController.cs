@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Cynthia.Test.Chat.Services;
+using Cynthia.Test.Chat.Models;
 
 namespace Cynthia.Test.Chat.Controllers
 {
@@ -11,33 +12,36 @@ namespace Cynthia.Test.Chat.Controllers
     public class ChatController : Controller
     {
         public IDataService ChatData { get; set; }
-        // GET api/chat
+        // GET api/chat 用于数据测试
         [HttpGet]
         public IEnumerable<string> Get()
         {
+            ChatData.AddData(new JsonData("gezi", "我是baka"));
             return new string[] { "Cynthia的", "数据测试" };
         }
 
-        // GET api/chat/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // GET api/chat/5 获得某条之后的所有聊天记录
+        [HttpGet("{count}")]
+        public IEnumerable<JsonData> Get(int count)
         {
-            return "value";
+            return ChatData.GetData(count);
         }
 
-        // POST api/chat
+        // POST api/chat 将一条消息添加进聊天记录
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void Post([FromBody]JsonData data)
         {
+            data.Time = DateTime.Now;
+            ChatData.AddData(data);
         }
 
-        // PUT api/chat/5
+        // PUT api/chat/5 暂时无用
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
         {
         }
 
-        // DELETE api/chat/5
+        // DELETE api/chat/5 暂时无用
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

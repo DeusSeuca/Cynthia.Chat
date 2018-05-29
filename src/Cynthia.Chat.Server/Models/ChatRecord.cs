@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace WebTest1.Models
+namespace Cynthia.Test.Chat.Models
 {
     public class ChatRecord
     {

@@ -1,13 +1,12 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebTest1.Attributes
+namespace Cynthia.Test.Chat.Attributes
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-    public class ServiceAttribute : Attribute
+    public class ScopedAttribute : ServiceAttribute
     {
-
     }
 }
