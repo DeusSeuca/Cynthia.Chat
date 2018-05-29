@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Cynthia.Chat.Server.Services;
-using Cynthia.Chat.Server.Models;
+using Cynthia.Chat.Common.Models;
 
 namespace Cynthia.Chat.Server.Controllers
 {

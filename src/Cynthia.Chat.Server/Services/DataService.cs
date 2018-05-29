@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cynthia.Chat.Server.Attributes;
-using Cynthia.Chat.Server.Models;
+using Cynthia.Chat.Common.Models;
 
 namespace Cynthia.Chat.Server.Services
 {
