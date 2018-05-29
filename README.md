@@ -1,2 +1,3 @@
-# Cynthia.Test
-一些测试
+# Cynthia.Chat
+一个简单的聊天测试
+
