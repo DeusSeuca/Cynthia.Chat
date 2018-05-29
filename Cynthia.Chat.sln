@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{06497DD3-62C0-4CC1-8A27-80DAF481995E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cynthia.Chat", "src\Cynthia.Test.Chat\Cynthia.Chat.Server.csproj", "{00DEE618-00A2-4A73-BC8A-A8E8231AEC0D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cynthia.Chat", "src\Cynthia.Chat.Server\Cynthia.Chat.Server.csproj", "{00DEE618-00A2-4A73-BC8A-A8E8231AEC0D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
