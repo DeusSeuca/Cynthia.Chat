@@ -5,56 +5,31 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Cynthia.Chat.Server",
+            "name": "Launch Server",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
-            // If you have changed target frameworks, make sure to update the program path.
+            "preLaunchTask": "build server",
             "program": "${workspaceFolder}/src/Cynthia.Chat.Server/bin/Debug/netcoreapp2.0/Cynthia.Chat.Server.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/Cynthia.Chat.Server",
             "stopAtEntry": false,
-            "internalConsoleOptions": "openOnSessionStart",
-            "launchBrowser": {
-                "enabled": true,
-                "args": "${auto-detect-url}",
-                "windows": {
-                    "command": "cmd.exe",
-                    "args": "/C start ${auto-detect-url}"
-                },
-                "osx": {
-                    "command": "open"
-                },
-                "linux": {
-                    "command": "xdg-open"
-                }
-            },
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
-            }
         },
         {
-            "name": "Cynthia.Chat.Client",
+            "name": "Launch Client",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
-            // If you have changed target frameworks, make sure to update the program path.
+            "preLaunchTask": "build client",
+            "console": "externalTerminal",
             "program": "${workspaceFolder}/src/Cynthia.Chat.Client/bin/Debug/netcoreapp2.0/Cynthia.Chat.Client.dll",
             "args": [],
-            "cwd": "${workspaceFolder}",
-            // For more information about the 'console' field, see https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#console-terminal-window
-            "console": "externalTerminal",
+            "cwd": "${workspaceFolder}/src/Cynthia.Chat.Client",
             "stopAtEntry": false,
-            "internalConsoleOptions": "openOnSessionStart"
-        },
-        {
-            "name": ".NET Core Attach",
-            "type": "coreclr",
-            "request": "attach",
-            "processId": "${command:pickProcess}"
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
         },
     ]
 }
