@@ -16,7 +16,6 @@ namespace Cynthia.Chat.Server.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            ChatData.AddData(new JsonData("gezi", "我是baka"));
             return new string[] { "Cynthia的", "数据测试" };
         }
 
