@@ -1,3 +1,8 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Cynthia.Chat.Common.Models;
+using Newtonsoft.Json;
+
 namespace Cynthia.Chat.Client
 {
     public class DataProcessing
