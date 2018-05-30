@@ -2,12 +2,22 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
+            "label": "build server",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "build",
                 "${workspaceFolder}/src/Cynthia.Chat.Server/Cynthia.Chat.Server.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build client",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/Cynthia.Chat.Client/Cynthia.Chat.Client.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
