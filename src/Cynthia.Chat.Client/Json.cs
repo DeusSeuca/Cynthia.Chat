@@ -1,3 +1,11 @@
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+
 namespace Cynthia.Chat.Client
 {
     public class Json
@@ -21,11 +29,27 @@ namespace Cynthia.Chat.Client
             }
         }
 
-        public static void PostJson<T>(T data)
+        public static async Task<IEnumerable<string>> PostJson<T>(string url, T data)
         {
-            JsonConvert.SerializeObject(data);
             using (var client = new HttpClient())
-            using(var content )
+            using (var content = new StringContent(JsonConvert.SerializeObject(data)))
+            {
+                content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+                using (var response = await client.PostAsync(url, content))
+                using (var stream = await response.Content.ReadAsStreamAsync())
+                using (var reader = new StreamReader(stream))
+                using (var jsonreader = new JsonTextReader(reader))
+                {
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        return new JsonSerializer().Deserialize<IEnumerable<string>>(jsonreader);
+                    }
+                    else
+                    {
+                        return new[] { "连接失败" };
+                    }
+                }
+            }
         }
     }
 }
