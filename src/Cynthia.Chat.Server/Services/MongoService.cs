@@ -12,7 +12,7 @@ namespace Cynthia.Chat.Server.Services
     [Singleton]
     public class MongoService
     {
-        public IMongoClient Client { get; set; }
+        public IMongoClient Client { get; set; } = new MongoClient("mongodb://cynthia.ovyno.com:27017");
         public IDataService Data { get; set; }
         //public string Url { get; set; } = "mongodb://localhost:27017";
         private const string dataBaseName = "chat";
