@@ -13,9 +13,8 @@ namespace Cynthia.Chat.Server.Services
     [Singleton]
     public class MongoService
     {
-        public IMongoClient Client { get; set; } = new MongoClient("mongodb://cynthia.ovyno.com:27017");
+        public IMongoClient Client { get; set; }
         public IDataService Data { get; set; }
-        //public string Url { get; set; } = "mongodb://localhost:27017";
         private const string dataBaseName = "chat";
         private const string collectionName = "test";
         private int _strategy = 0;//缓存中的第几位开始,是数据库没有的数据
@@ -23,7 +22,7 @@ namespace Cynthia.Chat.Server.Services
         {
             while (true)
             {
-                await Task.Delay(10000 * minute);//10秒
+                await Task.Delay(10000 * minute);//为了测试设置为10秒
                 SaveData();
             }
         }
@@ -35,7 +34,6 @@ namespace Cynthia.Chat.Server.Services
         {
             var collection = Client.GetDatabase(dataBaseName).GetMongoCollection<JsonData>(collectionName);
             Data.GetData(0).Skip(_strategy).ForAll(x => collection.InsertOne(x));
-            collection.InsertOne(new JsonData { Name = "测试数据", Content = "如果数据库出现这条数据,代表上面的语句错误", Time = DateTime.Now, Id = Guid.NewGuid() });
             _strategy = Data.Count;
         }
         public IEnumerable<JsonData> GetEndData(int count)

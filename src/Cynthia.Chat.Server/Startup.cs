@@ -45,6 +45,7 @@ namespace Cynthia.Chat.Server
             //控制器
             builder.RegisterTypes(myControllers).PropertiesAutowired();
             //服务
+            //保险起见还是用这样的url
             builder.RegisterType<MongoClient>().WithParameter(new NamedParameter("connectionString", "mongodb://cynthia.ovyno.com:27017")).AsImplementedInterfaces().PropertiesAutowired();
             //builder.Register<MongoClient>(x => new MongoClient("mongodb://localhost:27017")).AsImplementedInterfaces().PropertiesAutowired();
             builder.RegisterTypes(myServices.Where(x => x.IsDefined(typeof(SingletonAttribute))).ToArray()).AsImplementedInterfaces().PropertiesAutowired().SingleInstance();
