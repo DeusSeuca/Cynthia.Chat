@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cynthia.Chat.Common.Models;
 using Newtonsoft.Json;
+using System;
 
 namespace Cynthia.Chat.Client
 {
@@ -10,7 +11,7 @@ namespace Cynthia.Chat.Client
         public string Url { get; set; } = "http://localhost:5000/api/chat/";
         public async void SendData(string name, string context)
         {
-            await Json.PostJson<JsonData>(Url, new JsonData() { Name = name, Content = context });
+            await Json.PostJson<JsonData>(Url, new JsonData() { Name = name, Content = context, Id = Guid.NewGuid() });
         }
         public async Task<IEnumerable<JsonData>> GetData(int count)
         {

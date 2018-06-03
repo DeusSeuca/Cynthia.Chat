@@ -18,9 +18,9 @@ namespace Cynthia.Chat.Server.Services
         private const string dataBaseName = "chat";
         private const string collectionName = "test";
         private int _strategy = 0;//缓存中的第几位开始,是数据库没有的数据
-        public async void AutoSaveData(int minute = 10)
+        public async void AutoSaveData(int minute = 1)
         {
-            await Task.Delay(60000 * minute);//10分钟
+            await Task.Delay(60000 * minute);//1
             SaveData();
         }
         public void InitData()
