@@ -10,7 +10,7 @@ namespace Cynthia.Chat.Client
         public string Url { get; set; } = "http://localhost:5000/api/chat/";
         public async void SendData(string name, string context)
         {
-            await Json.PostJson<JsonData>(Url,new JsonData(name,context));
+            await Json.PostJson<JsonData>(Url, new JsonData() { Name = name, Content = context });
         }
         public async Task<IEnumerable<JsonData>> GetData(int count)
         {

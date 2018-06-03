@@ -13,6 +13,9 @@ using Autofac.Extensions.DependencyInjection;
 using Cynthia.Chat.Server.Attributes;
 using System.Reflection;
 using Cynthia.Test.Chat.Attributes;
+using Cynthia.Chat.Server.Services;
+using MongoDB.Driver;
+using MongoDB.Bson;
 
 namespace Cynthia.Chat.Server
 {
@@ -42,12 +45,16 @@ namespace Cynthia.Chat.Server
             //控制器
             builder.RegisterTypes(myControllers).PropertiesAutowired();
             //服务
+            builder.RegisterType<MongoClient>().WithParameter(new NamedParameter("connectionString", "mongodb://localhost:27017")).AsImplementedInterfaces().PropertiesAutowired();
+            //builder.Register<MongoClient>(x => new MongoClient("mongodb://localhost:27017")).AsImplementedInterfaces().PropertiesAutowired();
             builder.RegisterTypes(myServices.Where(x => x.IsDefined(typeof(SingletonAttribute))).ToArray()).AsImplementedInterfaces().PropertiesAutowired().SingleInstance();
             builder.RegisterTypes(myServices.Where(x => x.IsDefined(typeof(TransientAttribute))).ToArray()).AsImplementedInterfaces().PropertiesAutowired().InstancePerDependency();
             builder.RegisterTypes(myServices.Where(x => x.IsDefined(typeof(ScopedAttribute))).ToArray()).AsImplementedInterfaces().PropertiesAutowired().InstancePerLifetimeScope();
 
             ApplicationContainer = builder.Build();
             services.AddMvc();
+            ApplicationContainer.Resolve<InitializationService>().Start();
+
             return new AutofacServiceProvider(ApplicationContainer);
         }
 
