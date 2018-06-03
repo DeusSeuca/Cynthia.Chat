@@ -6,6 +6,7 @@ using MongoDB.Driver;
 using MongoDB.Bson;
 using Cynthia.Chat.Common.Models;
 using System.Collections.Generic;
+using System;
 
 namespace Cynthia.Chat.Server.Services
 {
@@ -20,7 +21,7 @@ namespace Cynthia.Chat.Server.Services
         private int _strategy = 0;//缓存中的第几位开始,是数据库没有的数据
         public async void AutoSaveData(int minute = 1)
         {
-            await Task.Delay(60000 * minute);//1
+            await Task.Delay(10000 * minute);//10秒
             SaveData();
         }
         public void InitData()
@@ -29,14 +30,25 @@ namespace Cynthia.Chat.Server.Services
         }
         public void SaveData()
         {
-            var collection = Client.GetDatabase(dataBaseName).GetMongoCollection<JsonData>(collectionName);
+            //测试用
+            var url = "mongodb://cynthia.ovyno.com:27017";
+            var client = new MongoClient(url);
+            var db = client.GetDatabase("chat");
+            var collection = db.GetCollection<JsonData>("test");
+            //var collection = Client.GetDatabase(dataBaseName).GetMongoCollection<JsonData>(collectionName);
             Data.GetData(0).Skip(_strategy).ForAll(x => collection.InsertOne(x));
+            collection.InsertOne(new JsonData { Name = "测试数据", Content = "如果数据库出现这条数据,代表上面的语句错误", Time = DateTime.Now, Id = Guid.NewGuid() });
             _strategy = Data.Count;
         }
         public IEnumerable<JsonData> GetEndData(int count)
         {
             //获得默认的count条数据
-            var collection = Client.GetDatabase(dataBaseName).GetMongoCollection<JsonData>(collectionName);
+            //测试用
+            var url = "mongodb://cynthia.ovyno.com:27017";
+            var client = new MongoClient(url);
+            var db = client.GetDatabase("chat");
+            var collection = db.GetCollection<JsonData>("test");
+            //var collection = Client.GetDatabase(dataBaseName).GetMongoCollection<JsonData>(collectionName);
             var data = collection.AsQueryable<JsonData>().OrderBy(x => x.Time).Reverse().Take(count).Reverse().AsEnumerable();
             _strategy = data.Count();
             return data;
