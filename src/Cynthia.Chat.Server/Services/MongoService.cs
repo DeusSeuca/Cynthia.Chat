@@ -21,8 +21,11 @@ namespace Cynthia.Chat.Server.Services
         private int _strategy = 0;//缓存中的第几位开始,是数据库没有的数据
         public async void AutoSaveData(int minute = 1)
         {
-            await Task.Delay(10000 * minute);//10秒
-            SaveData();
+            while (true)
+            {
+                await Task.Delay(10000 * minute);//10秒
+                SaveData();
+            }
         }
         public void InitData()
         {
@@ -38,7 +41,7 @@ namespace Cynthia.Chat.Server.Services
             //var collection = Client.GetDatabase(dataBaseName).GetMongoCollection<JsonData>(collectionName);
             Data.GetData(0).Skip(_strategy).ForAll(x => collection.InsertOne(x));
             collection.InsertOne(new JsonData { Name = "测试数据", Content = "如果数据库出现这条数据,代表上面的语句错误", Time = DateTime.Now, Id = Guid.NewGuid() });
-            _strategy = Data.Count;
+            //_strategy = Data.Count;
         }
         public IEnumerable<JsonData> GetEndData(int count)
         {
@@ -50,7 +53,7 @@ namespace Cynthia.Chat.Server.Services
             var collection = db.GetCollection<JsonData>("test");
             //var collection = Client.GetDatabase(dataBaseName).GetMongoCollection<JsonData>(collectionName);
             var data = collection.AsQueryable<JsonData>().OrderBy(x => x.Time).Reverse().Take(count).Reverse().AsEnumerable();
-            _strategy = data.Count();
+            //_strategy = data.Count();
             return data;
         }
     }
