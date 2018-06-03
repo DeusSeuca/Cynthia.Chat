@@ -31,6 +31,7 @@ namespace Cynthia.Chat.Server.Controllers
         public void Post([FromBody]JsonData data)
         {
             data.Time = DateTime.Now;
+            data.Name += "T";
             ChatData.AddData(data);
         }
 

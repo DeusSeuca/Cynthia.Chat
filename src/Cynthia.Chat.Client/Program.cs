@@ -14,6 +14,13 @@ namespace Cynthia.Chat.Client
     {
         static void Main(string[] args)
         {
+            /*var url = "mongodb://cynthia.ovyno.com:27017";
+            var cl = new MongoClient(url);
+            var db = cl.GetDatabase("chat");
+            var c = db.GetCollection<JsonData>("test");
+            c.InsertOne(new JsonData { Name = "测试数据", Content = "如果数据库出现这条数据,代表上面的语句错误", Time = DateTime.Now, Id = Guid.NewGuid() });
+            c.AsQueryable().AsEnumerable<JsonData>().Select(x => $"-------------------------\n{x.Name}    \n{x.Content}").ForAll(Console.WriteLine);
+            Console.ReadKey();*/
             string userName;
             string context;
             int count = 0;
