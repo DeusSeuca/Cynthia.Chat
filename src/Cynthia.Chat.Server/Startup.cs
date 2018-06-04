@@ -43,17 +43,20 @@ namespace Cynthia.Chat.Server
             builder.Populate(services);
 
             //控制器
-            builder.RegisterTypes(myControllers).PropertiesAutowired();
+            builder.RegisterTypes(myControllers).PropertiesAutowired().AsSelf();
             //服务
             //保险起见还是用这样的url
-            builder.RegisterType<MongoClient>().WithParameter(new NamedParameter("connectionString", "mongodb://cynthia.ovyno.com:27017")).AsImplementedInterfaces().PropertiesAutowired();
+            builder.RegisterType<MongoClient>().WithParameter(new NamedParameter("connectionString", "mongodb://localhost:27017")).AsImplementedInterfaces().PropertiesAutowired().AsSelf();
             //builder.Register<MongoClient>(x => new MongoClient("mongodb://localhost:27017")).AsImplementedInterfaces().PropertiesAutowired();
-            builder.RegisterTypes(myServices.Where(x => x.IsDefined(typeof(SingletonAttribute))).ToArray()).AsImplementedInterfaces().PropertiesAutowired().SingleInstance();
-            builder.RegisterTypes(myServices.Where(x => x.IsDefined(typeof(TransientAttribute))).ToArray()).AsImplementedInterfaces().PropertiesAutowired().InstancePerDependency();
-            builder.RegisterTypes(myServices.Where(x => x.IsDefined(typeof(ScopedAttribute))).ToArray()).AsImplementedInterfaces().PropertiesAutowired().InstancePerLifetimeScope();
+            builder.RegisterTypes(myServices.Where(x => x.IsDefined(typeof(SingletonAttribute))).ToArray()).AsSelf().AsImplementedInterfaces().PropertiesAutowired().SingleInstance();
+            builder.RegisterTypes(myServices.Where(x => x.IsDefined(typeof(TransientAttribute))).ToArray()).AsSelf().AsImplementedInterfaces().PropertiesAutowired().InstancePerDependency();
+            builder.RegisterTypes(myServices.Where(x => x.IsDefined(typeof(ScopedAttribute))).ToArray()).AsSelf().AsImplementedInterfaces().PropertiesAutowired().InstancePerLifetimeScope();
 
             ApplicationContainer = builder.Build();
             services.AddMvc();
+            var mda = ApplicationContainer.IsRegistered<DataService>();
+            var minit = ApplicationContainer.IsRegistered<InitializationService>();
+            var mmongo = ApplicationContainer.IsRegistered<MongoClient>();
             ApplicationContainer.Resolve<InitializationService>().Start();
 
             return new AutofacServiceProvider(ApplicationContainer);

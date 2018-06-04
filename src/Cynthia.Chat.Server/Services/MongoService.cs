@@ -39,7 +39,7 @@ namespace Cynthia.Chat.Server.Services
         public IEnumerable<JsonData> GetEndData(int count)
         {
             var collection = Client.GetDatabase(dataBaseName).GetMongoCollection<JsonData>(collectionName);
-            var data = collection.AsQueryable<JsonData>().OrderBy(x => x.Time).Reverse().Take(count).Reverse().AsEnumerable();
+            var data = collection.AsQueryable<JsonData>().OrderByDescending(x => x.Time).Take(count).OrderBy(x => x.Time).AsEnumerable();
             _strategy = data.Count();
             return data;
         }

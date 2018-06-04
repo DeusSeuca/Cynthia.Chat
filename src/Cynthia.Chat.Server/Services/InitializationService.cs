@@ -3,6 +3,7 @@ using Cynthia.Chat.Server.Attributes;
 
 namespace Cynthia.Chat.Server.Services
 {
+    [Service]
     [Singleton]
     public class InitializationService
     {
