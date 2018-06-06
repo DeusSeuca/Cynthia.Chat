@@ -46,7 +46,12 @@ namespace Cynthia.Chat.Server
             builder.RegisterTypes(myControllers).PropertiesAutowired().AsSelf();
             //服务
             //保险起见还是用这样的url
-            builder.RegisterType<MongoClient>().WithParameter(new NamedParameter("connectionString", "mongodb://localhost:27017")).AsImplementedInterfaces().PropertiesAutowired().AsSelf();
+            builder.RegisterType<MongoClient>()
+                .WithParameter(new NamedParameter("connectionString", "mongodb://localhost:27017"))
+                .AsImplementedInterfaces()
+                .PropertiesAutowired()
+                .AsSelf();
+            //builder.RegisterType<MongoClient>().WithParameter(new NamedParameter("connectionString", "mongodb://localhost:27017")).AsImplementedInterfaces().PropertiesAutowired().AsSelf();
             //builder.Register<MongoClient>(x => new MongoClient("mongodb://localhost:27017")).AsImplementedInterfaces().PropertiesAutowired();
             builder.RegisterTypes(myServices.Where(x => x.IsDefined(typeof(SingletonAttribute))).ToArray()).AsSelf().AsImplementedInterfaces().PropertiesAutowired().SingleInstance();
             builder.RegisterTypes(myServices.Where(x => x.IsDefined(typeof(TransientAttribute))).ToArray()).AsSelf().AsImplementedInterfaces().PropertiesAutowired().InstancePerDependency();
@@ -54,9 +59,6 @@ namespace Cynthia.Chat.Server
 
             ApplicationContainer = builder.Build();
             services.AddMvc();
-            var mda = ApplicationContainer.IsRegistered<DataService>();
-            var minit = ApplicationContainer.IsRegistered<InitializationService>();
-            var mmongo = ApplicationContainer.IsRegistered<MongoClient>();
             ApplicationContainer.Resolve<InitializationService>().Start();
 
             return new AutofacServiceProvider(ApplicationContainer);

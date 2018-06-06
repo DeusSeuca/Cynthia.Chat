@@ -12,11 +12,12 @@ namespace Cynthia.Chat.Server.Controllers
     public class ChatController : Controller
     {
         public IDataService ChatData { get; set; }
-        // GET api/chat 用于数据测试
+        public MongoService Mongo { get; set; }
+        // GET api/chat 获得数据总数量
         [HttpGet]
-        public IEnumerable<string> Get()
+        public int GetCount()
         {
-            return new string[] { "Cynthia的", "数据测试" };
+            return Mongo.GetDataCount();
         }
 
         // GET api/chat/5 获得某条之后的所有聊天记录
