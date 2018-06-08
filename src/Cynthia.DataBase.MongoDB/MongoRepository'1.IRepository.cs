@@ -20,17 +20,6 @@ namespace Cynthia.DataBase.MongoDB
         public int Count => queryable.Count();
 
         public bool IsReadOnly => false;
-        /*
-        public CollectionNamespace CollectionNamespace => _collection.CollectionNamespace;
-
-        IMongoDatabase IMongoCollection<TModel>.Database => _collection.Database;
-
-        public IBsonSerializer<TModel> DocumentSerializer => _collection.DocumentSerializer;
-
-        public IMongoIndexManager<TModel> Indexes => _collection.Indexes;
-
-        public MongoCollectionSettings Settings => _collection.Settings;
-        */
 
         public TModel this[string id]
         {
