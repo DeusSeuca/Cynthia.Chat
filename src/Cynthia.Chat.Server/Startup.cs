@@ -17,6 +17,7 @@ using MongoDB.Bson;
 using Cynthia.Chat.Server.Controllers;
 using Cynthia.Chat.Common;
 using Cynthia.Chat.Common.Attributes;
+using Cynthia.Chat.MongoDB;
 
 namespace Cynthia.Chat.Server
 {
@@ -67,9 +68,8 @@ namespace Cynthia.Chat.Server
                 .AsSelf();
 
             ApplicationContainer = builder.Build();
-            var a4 = ApplicationContainer.IsRegistered<IDatabaseService>();
-            var a1 = ApplicationContainer.IsRegistered<IMongoClient>();
-            var a2 = ApplicationContainer.IsRegistered<IMessagesService>();
+            var a = ApplicationContainer.IsRegistered<IDatabaseService>();
+            var b = ApplicationContainer.IsRegistered<MongoDatabaseService>();
             ApplicationContainer.Resolve<InitializationService>().Start();
 
             return new AutofacServiceProvider(ApplicationContainer);

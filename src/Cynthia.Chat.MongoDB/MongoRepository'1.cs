@@ -5,7 +5,7 @@ using MongoDB.Driver;
 
 namespace Cynthia.Chat.MongoDB
 {
-    internal partial class MongoRepository<TModel> : MongoRepository where TModel : IModel
+    internal partial class MongoRepository<TModel> : MongoRepository
     {
         private IMongoCollection<TModel> _collection;
         private IQueryable<TModel> queryable => _collection.AsQueryable<TModel>();
