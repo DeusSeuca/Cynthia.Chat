@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Cynthia.DataBase.Common
+namespace Cynthia.Chat.Common
 {
     public interface IDatabase : IEnumerable<IRepository>
     {
