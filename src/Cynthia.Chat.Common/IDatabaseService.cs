@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Cynthia.DataBase.Common
+namespace Cynthia.Chat.Common
 {
     public interface IDatabaseService : IEnumerable<IDatabase>
     {

@@ -17,7 +17,7 @@ using MongoDB.Bson;
 using Cynthia.Chat.Server.Controllers;
 using Cynthia.Test.Chat.Attributes;
 using Cynthia.Chat.Server.Attributes;
-using Cynthia.DataBase.Common;
+using Cynthia.Chat.Common;
 
 namespace Cynthia.Chat.Server
 {

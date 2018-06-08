@@ -7,6 +7,7 @@ using Cynthia.Chat.Common.Models;
 using System.Collections.Generic;
 using System;
 using Cynthia.Chat.Common;
+using Cynthia.Chat.Server.Attributes;
 
 namespace Cynthia.Chat.Server.Services
 {

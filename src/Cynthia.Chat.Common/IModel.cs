@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Cynthia.DataBase.Common
+namespace Cynthia.Chat.Common
 {
     public interface IModel
     {

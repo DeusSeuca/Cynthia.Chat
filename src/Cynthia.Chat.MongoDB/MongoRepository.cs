@@ -1,4 +1,6 @@
-namespace DatabaseTest.MongoDB
+using Cynthia.Chat.Common;
+
+namespace Cynthia.Chat.MongoDB
 {
     internal class MongoRepository : IRepository
     {
@@ -6,7 +8,7 @@ namespace DatabaseTest.MongoDB
 
         public IDatabase Database { get; }
 
-        public IRepository<TModel> As<TModel>() where TModel : ModelBase => Database.GetRepository<TModel>(Name);
+        public IRepository<TModel> As<TModel>() where TModel : IModel => Database.GetRepository<TModel>(Name);
 
         public MongoRepository(MongoDatabase database, string name)
         {

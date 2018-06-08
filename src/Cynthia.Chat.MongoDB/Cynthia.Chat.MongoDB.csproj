@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Alsein.Utilities" Version="0.1.6" />
     <PackageReference Include="MongoDB.Driver" Version="2.6.1" />
   </ItemGroup>
 

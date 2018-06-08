@@ -1,5 +1,5 @@
 using System;
-using Cynthia.DataBase.Common;
+using Cynthia.Chat.Common;
 
 namespace Cynthia.Chat.Common.Models
 {

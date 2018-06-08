@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Alsein.Utilities;
+using Cynthia.Chat.Common;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
-namespace DatabaseTest.MongoDB
+namespace Cynthia.Chat.MongoDB
 {
-    internal partial class MongoRepository<TModel> : IRepository<TModel> where TModel : ModelBase
+    internal partial class MongoRepository<TModel> : IRepository<TModel> where TModel : IModel
     {
         public Type ElementType => queryable.ElementType;
 
@@ -20,16 +21,6 @@ namespace DatabaseTest.MongoDB
         public int Count => queryable.Count();
 
         public bool IsReadOnly => false;
-
-        public CollectionNamespace CollectionNamespace => _collection.CollectionNamespace;
-
-        IMongoDatabase IMongoCollection<TModel>.Database => _collection.Database;
-
-        public IBsonSerializer<TModel> DocumentSerializer => _collection.DocumentSerializer;
-
-        public IMongoIndexManager<TModel> Indexes => _collection.Indexes;
-
-        public MongoCollectionSettings Settings => _collection.Settings;
 
         public TModel this[string id]
         {

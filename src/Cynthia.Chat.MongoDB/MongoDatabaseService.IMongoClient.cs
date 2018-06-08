@@ -4,7 +4,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Core.Clusters;
 
-namespace DatabaseTest.MongoDB
+namespace Cynthia.Chat.MongoDB
 {
     internal partial class MongoDatabaseService : IMongoClient
     {

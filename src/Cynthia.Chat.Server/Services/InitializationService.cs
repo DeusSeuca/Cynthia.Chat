@@ -1,6 +1,6 @@
 using Autofac;
 using Cynthia.Chat.Server.Attributes;
-using Cynthia.DataBase.Common;
+using Cynthia.Chat.Common;
 
 namespace Cynthia.Chat.Server.Services
 {

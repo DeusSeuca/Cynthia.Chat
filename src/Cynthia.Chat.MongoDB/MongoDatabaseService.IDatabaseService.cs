@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cynthia.Chat.Common;
 
-namespace DatabaseTest.MongoDB
+namespace Cynthia.Chat.MongoDB
 {
     internal partial class MongoDatabaseService : IDatabaseService
     {
