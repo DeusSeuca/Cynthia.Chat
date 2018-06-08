@@ -1,10 +1,9 @@
 using Autofac;
-using Cynthia.Chat.Server.Attributes;
 using Cynthia.Chat.Common;
+using Cynthia.Chat.Common.Attributes;
 
 namespace Cynthia.Chat.Server.Services
 {
-    [Service]
     [Singleton]
     public class InitializationService
     {

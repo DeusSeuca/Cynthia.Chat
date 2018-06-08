@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cynthia.Chat.Common\Cynthia.Chat.Common.csproj" />
+    <ProjectReference Include="..\Cynthia.Chat.MongoDB\Cynthia.Chat.MongoDB.csproj" />
   </ItemGroup>
 
 </Project>
