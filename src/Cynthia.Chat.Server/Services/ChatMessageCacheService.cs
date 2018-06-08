@@ -1,13 +1,12 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Cynthia.Chat.Server.Attributes;
 using Alsein.Utilities;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using Cynthia.Chat.Common.Models;
 using System.Collections.Generic;
 using System;
-using Cynthia.DataBase.Common;
+using Cynthia.Chat.Common;
 
 namespace Cynthia.Chat.Server.Services
 {

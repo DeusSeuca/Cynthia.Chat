@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Cynthia.Chat.Common;
-using MongoDB.Driver;
 using Alsein.Utilities;
+using MongoDB.Bson.Serialization;
+using MongoDB.Driver;
 
-namespace Cynthia.DataBase.MongoDB
+namespace DatabaseTest.MongoDB
 {
-    internal partial class MongoRepository<TModel> : IRepository<TModel> where TModel : IModel
+    internal partial class MongoRepository<TModel> : IRepository<TModel> where TModel : ModelBase
     {
         public Type ElementType => queryable.ElementType;
 
@@ -20,6 +20,16 @@ namespace Cynthia.DataBase.MongoDB
         public int Count => queryable.Count();
 
         public bool IsReadOnly => false;
+
+        public CollectionNamespace CollectionNamespace => _collection.CollectionNamespace;
+
+        IMongoDatabase IMongoCollection<TModel>.Database => _collection.Database;
+
+        public IBsonSerializer<TModel> DocumentSerializer => _collection.DocumentSerializer;
+
+        public IMongoIndexManager<TModel> Indexes => _collection.Indexes;
+
+        public MongoCollectionSettings Settings => _collection.Settings;
 
         public TModel this[string id]
         {
@@ -63,20 +73,5 @@ namespace Cynthia.DataBase.MongoDB
         public int Update(Expression<Func<TModel, bool>> predicate, TModel item) => (int)_collection.UpdateMany(predicate, item.To(UpdateDefinition)).ModifiedCount;
 
         IEnumerator IEnumerable.GetEnumerator() => queryable.GetEnumerator();
-
-        public bool Updata(TModel item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int Updata(IEnumerable<TModel> items)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int Updata(Expression<Func<TModel, bool>> predicate, TModel item)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

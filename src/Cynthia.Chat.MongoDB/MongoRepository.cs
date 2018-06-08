@@ -1,6 +1,4 @@
-﻿using Cynthia.Chat.Common;
-
-namespace Cynthia.DataBase.MongoDB
+namespace DatabaseTest.MongoDB
 {
     internal class MongoRepository : IRepository
     {
@@ -8,14 +6,18 @@ namespace Cynthia.DataBase.MongoDB
 
         public IDatabase Database { get; }
 
+        public IRepository<TModel> As<TModel>() where TModel : ModelBase => Database.GetRepository<TModel>(Name);
+
         public MongoRepository(MongoDatabase database, string name)
         {
-            Name = name;
             Database = database;
+            Name = name;
         }
-        public IRepository<TModel> As<TModel>() where TModel : IModel => Database.GetRepository<TModel>(Name);
-        public override bool Equals(object obj) => obj is MongoRepository repositroy && repositroy.Name == Name && repositroy.Database == Database;
+
+        public override bool Equals(object obj) => obj is MongoRepository repository && Name == repository.Name && Database == repository.Database;
+
         public override int GetHashCode() => base.GetHashCode();
+
         public override string ToString() => Name;
     }
 }
