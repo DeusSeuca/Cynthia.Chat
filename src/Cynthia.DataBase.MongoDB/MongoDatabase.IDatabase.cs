@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Cynthia.DataBase.Common;
+using Cynthia.Chat.Common;
 using MongoDB.Driver;
 
 namespace Cynthia.DataBase.MongoDB
@@ -14,9 +14,9 @@ namespace Cynthia.DataBase.MongoDB
 
         public IRepository GetRepository(string name) => new MongoRepository(this, Name);
 
-        public IRepository<TModel> GetRepository<TModel>(string name) where TModel : ModelBase => new MongoRepository<TModel>(this, name, _database.GetCollection<TModel>(name));
+        public IRepository<TModel> GetRepository<TModel>(string name) where TModel : IModel => new MongoRepository<TModel>(this, name, _database.GetCollection<TModel>(name));
 
-        public IRepository<TModel> GetRepository<TModel>() where TModel : ModelBase => GetRepository<TModel>(typeof(TModel).Name);
+        public IRepository<TModel> GetRepository<TModel>() where TModel : IModel => GetRepository<TModel>(typeof(TModel).Name);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }

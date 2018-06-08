@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Cynthia.Chat.Common.Models
+namespace Cynthia.DataBase.Common
 {
-    public class ModelBase
+    public class ModelBase : IModel
     {
         [Key]
         public string Id { get; set; }

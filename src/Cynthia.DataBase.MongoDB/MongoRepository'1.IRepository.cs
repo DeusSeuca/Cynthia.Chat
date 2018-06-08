@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Cynthia.DataBase.Common;
+using Cynthia.Chat.Common;
 using MongoDB.Driver;
 using Alsein.Utilities;
 
 namespace Cynthia.DataBase.MongoDB
 {
-    internal partial class MongoRepository<TModel> : IRepository<TModel> where TModel : ModelBase
+    internal partial class MongoRepository<TModel> : IRepository<TModel> where TModel : IModel
     {
         public Type ElementType => queryable.ElementType;
 

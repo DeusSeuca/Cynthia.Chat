@@ -7,16 +7,18 @@ using MongoDB.Bson;
 using Cynthia.Chat.Common.Models;
 using System.Collections.Generic;
 using System;
+using Cynthia.DataBase.Common;
 
 namespace Cynthia.Chat.Server.Services
 {
     [Singleton]
-    public class MongoService
+    public class ChatMessageCacheService
     {
-        public IMongoClient Client { get; set; }
-        public IDataService Data { get; set; }
+        public IDatabaseService Client { get; set; }
+        public IMessagesService Massage { get; set; }
         private const string dataBaseName = "chat";
-        private const string collectionName = "test";
+        private const string repositoryName = "test";
+        private IRepository<ChatMessage> repository;
         private int _strategy = 0;//缓存中的第几位开始,是数据库没有的数据
         public async void AutoSaveData(int minute = 10)
         {
@@ -28,51 +30,48 @@ namespace Cynthia.Chat.Server.Services
         }
         public void InitData(int initnum = 60)
         {
+            repository = GetRepositroy<ChatMessage>();
             //服务开始时,先从数据库取出末尾60条数据
-            Data.AddData(GetEndData(initnum));
+            Massage.AddMessage(GetEndData(initnum));
         }
         public void SaveData()
         {
             //将缓存中多余的数据存入数据库,用_strategy做标识并更新_strategy的值
-            Data.GetData(0).Skip(_strategy).To(DataToMongo);
-            _strategy = Data.Count;
+            Massage.GetMessage(0).Skip(_strategy).To(MessagesToDatabase);
+            _strategy = Massage.Count;
         }
-        public void DataToMongo(IEnumerable<ChatMessage> data)
+        public void MessagesToDatabase(IEnumerable<ChatMessage> messages)
         {
             //将集合中所有元素添加进数据库
-            data.ForAll(x => x.To(DataToMongo));
+            repository.Add(messages);
         }
-        public void DataToMongo(ChatMessage data)
+        public void MessageToDatabase(ChatMessage message)
         {
             //将集合中所有元素添加进数据库
-            var collection = GetCollection();
-            collection.InsertOne(data);
+            repository.Add(message);
         }
-        public IMongoCollection<ChatMessage> GetCollection()
+        public IRepository<TModel> GetRepositroy<TModel>() where TModel : IModel
         {
             //获得数据库集合
-            return Client.GetDatabase(dataBaseName).GetMongoCollection<ChatMessage>(collectionName);
+            return Client[dataBaseName].GetRepository<TModel>(repositoryName);
         }
         public IEnumerable<ChatMessage> GetEndData(int count)
         {
             //获得数据库末尾的count条数据
-            var collection = GetCollection();
-            var data = collection.AsQueryable<ChatMessage>().OrderByDescending(x => x.Time).Take(count).OrderBy(x => x.Time).AsEnumerable();
+            var data = repository.AsQueryable<ChatMessage>().OrderByDescending(x => x.Time).Take(count).OrderBy(x => x.Time).AsEnumerable();
             _strategy = data.Count();
             return data;
         }
         public int GetDataCount()
         {
             //获得数据库中总共的数据数量
-            var collection = GetCollection();
-            return collection.AsQueryable<ChatMessage>().Count() + Data.Count - _strategy;
+            return repository.Count() + Massage.Count - _strategy;
         }
         public IEnumerable<ChatMessage> GetPageData(int page, int count = 60)
         {
             //获得某一页的数据  (每个的数量,和第几页  默认一页60条数据
-            var collection = GetCollection();
             var pagecount = GetPageNum(count);
-            return collection.AsQueryable<ChatMessage>().OrderBy(x => x.Time).Skip(page * count).Take(count).AsEnumerable();
+            return repository.AsQueryable<ChatMessage>().OrderBy(x => x.Time).Skip(page * count).Take(count).AsEnumerable();
         }
         public int GetPageNum(int count = 60)
         {
@@ -83,17 +82,6 @@ namespace Cynthia.Chat.Server.Services
                 return datacount / count + 1;
             }
             return datacount / count;
-        }
-    }
-    public static class MongoExtension
-    {
-        public static IMongoDatabase GetMongoDatabase(this IMongoClient client, string dataBaseName)
-        {
-            return client.GetDatabase(dataBaseName);
-        }
-        public static IMongoCollection<T> GetMongoCollection<T>(this IMongoDatabase db, string collectionName)
-        {
-            return db.GetCollection<T>(collectionName);
         }
     }
 }

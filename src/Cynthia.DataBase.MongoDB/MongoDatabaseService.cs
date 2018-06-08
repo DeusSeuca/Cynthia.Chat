@@ -1,6 +1,6 @@
 ﻿using System;
 using MongoDB.Driver;
-using Cynthia.DataBase.Common;
+using Cynthia.Chat.Common;
 using System.Linq;
 using System.Collections.Generic;
 

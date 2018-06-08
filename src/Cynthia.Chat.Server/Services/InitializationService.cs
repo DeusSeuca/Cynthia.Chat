@@ -1,5 +1,6 @@
 using Autofac;
 using Cynthia.Chat.Server.Attributes;
+using Cynthia.DataBase.Common;
 
 namespace Cynthia.Chat.Server.Services
 {
@@ -7,11 +8,11 @@ namespace Cynthia.Chat.Server.Services
     [Singleton]
     public class InitializationService
     {
-        public MongoService Mongo { get; set; }
+        public ChatMessageCacheService cache { get; set; }
         public void Start()
         {
-            Mongo.InitData();
-            Mongo.AutoSaveData();
+            cache.InitData();
+            cache.AutoSaveData();
         }
     }
 }

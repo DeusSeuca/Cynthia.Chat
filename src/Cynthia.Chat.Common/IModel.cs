@@ -2,9 +2,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Cynthia.DataBase.Common
 {
-    public class ModelBase
+    public interface IModel
     {
-        [Key]
-        public string Id { get; set; }
+        string Id { get; set; }
     }
 }

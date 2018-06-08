@@ -10,13 +10,14 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Cynthia.Chat.Server.Attributes;
 using System.Reflection;
-using Cynthia.Test.Chat.Attributes;
 using Cynthia.Chat.Server.Services;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using Cynthia.Chat.Server.Controllers;
+using Cynthia.Test.Chat.Attributes;
+using Cynthia.Chat.Server.Attributes;
+using Cynthia.DataBase.Common;
 
 namespace Cynthia.Chat.Server
 {
@@ -38,7 +39,7 @@ namespace Cynthia.Chat.Server
             builder.Populate(services);
 
             //控制器
-            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
+            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies().ToArray())
                 .Where(x => x.Name.EndsWith("Controller"))
                 .PropertiesAutowired();
             //服务
@@ -47,19 +48,19 @@ namespace Cynthia.Chat.Server
                 .AsImplementedInterfaces()
                 .PropertiesAutowired()
                 .AsSelf();
-            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
+            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies().ToArray())
                 .Where(x => x.Name.EndsWith("Service") && x.IsDefined(typeof(SingletonAttribute)))
                 .PropertiesAutowired()
                 .SingleInstance()
                 .AsImplementedInterfaces()
                 .AsSelf();
-            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
+            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies().ToArray())
                 .Where(x => x.Name.EndsWith("Service") && x.IsDefined(typeof(TransientAttribute)))
                 .PropertiesAutowired()
                 .InstancePerDependency()
                 .AsImplementedInterfaces()
                 .AsSelf();
-            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
+            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies().ToArray())
                 .Where(x => x.Name.EndsWith("Service") && x.IsDefined(typeof(ScopedAttribute)))
                 .PropertiesAutowired()
                 .InstancePerLifetimeScope()
@@ -67,6 +68,7 @@ namespace Cynthia.Chat.Server
                 .AsSelf();
 
             ApplicationContainer = builder.Build();
+            var a = ApplicationContainer.IsRegistered<IDatabaseService>();
             ApplicationContainer.Resolve<InitializationService>().Start();
 
             return new AutofacServiceProvider(ApplicationContainer);

@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cynthia.Database.Common\Cynthia.Database.Common.csproj" />
+    <ProjectReference Include="..\Cynthia.Chat.Common\Cynthia.Chat.Common.csproj" />
   </ItemGroup>
 
 </Project>

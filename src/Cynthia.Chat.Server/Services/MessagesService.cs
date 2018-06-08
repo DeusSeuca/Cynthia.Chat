@@ -9,7 +9,7 @@ using Alsein.Utilities;
 namespace Cynthia.Chat.Server.Services
 {
     [Singleton]
-    internal class DataService : IDataService
+    internal class MessageService : IMessagesService
     {
         private List<ChatMessage> ContextData = new List<ChatMessage>();
         public int Count
@@ -19,15 +19,15 @@ namespace Cynthia.Chat.Server.Services
                 return ContextData.Count;
             }
         }
-        public void AddData(ChatMessage data)
+        public void AddMessage(ChatMessage data)
         {
             ContextData.Add(data);
         }
-        public void AddData(IEnumerable<ChatMessage> data)
+        public void AddMessage(IEnumerable<ChatMessage> data)
         {
             data.ForAll(x => ContextData.Add(x));
         }
-        public IEnumerable<ChatMessage> GetData(int count)
+        public IEnumerable<ChatMessage> GetMessage(int count)
         {
             return ContextData.Skip(count);
         }

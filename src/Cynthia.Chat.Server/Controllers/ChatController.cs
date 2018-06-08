@@ -11,20 +11,20 @@ namespace Cynthia.Chat.Server.Controllers
     [Route("api/[controller]")]
     public class ChatController : Controller
     {
-        public IDataService ChatData { get; set; }
-        public MongoService Mongo { get; set; }
+        public IMessagesService Message { get; set; }
+        public ChatMessageCacheService cache { get; set; }
         // GET api/chat 获得数据总数量
         [HttpGet]
         public int GetCount()
         {
-            return Mongo.GetDataCount();
+            return cache.GetDataCount();
         }
 
         // GET api/chat/5 获得某条之后的所有聊天记录
         [HttpGet("{count}")]
         public IEnumerable<ChatMessage> Get(int count)
         {
-            return ChatData.GetData(count);
+            return Message.GetMessage(count);
         }
 
         // POST api/chat 将一条消息添加进聊天记录
@@ -32,7 +32,7 @@ namespace Cynthia.Chat.Server.Controllers
         public void Post([FromBody]ChatMessage data)
         {
             data.Time = DateTime.Now;
-            ChatData.AddData(data);
+            Message.AddMessage(data);
         }
 
         // PUT api/chat/5 暂时无用
