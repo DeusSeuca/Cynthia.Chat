@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cynthia.Chat.Common", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cynthia.Chat.Client", "src\Cynthia.Chat.Client\Cynthia.Chat.Client.csproj", "{5E87308E-B05E-424B-BAD7-95D455372856}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cynthia.Chat.MongoDB", "src\Cynthia.Chat.MongoDB\Cynthia.Chat.MongoDB.csproj", "{731523DF-C235-4B7E-BE59-B2E02DD8D2DF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cynthia.Chat.MongoDB","src\Cynthia.Chat.MongoDB\Cynthia.Chat.MongoDB.csproj", "{731523DF-C235-4B7E-BE59-B2E02DD8D2DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -17,7 +17,10 @@ using MongoDB.Bson;
 using Cynthia.Chat.Server.Controllers;
 using Cynthia.Chat.Common;
 using Cynthia.Chat.Common.Attributes;
-using Cynthia.Chat.MongoDB;
+using Alsein.Utilities;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Cynthia.Chat.Server.Hubs;
 
 namespace Cynthia.Chat.Server
 {
@@ -34,7 +37,15 @@ namespace Cynthia.Chat.Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
             services.AddMvc().AddControllersAsServices();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSignalR();
             var builder = new ContainerBuilder();
             builder.Populate(services);
 
@@ -66,10 +77,16 @@ namespace Cynthia.Chat.Server
                 .InstancePerLifetimeScope()
                 .AsImplementedInterfaces()
                 .AsSelf();
+            builder.RegisterAssemblyTypes(AssemblyManager.AllModuleAssemblies.ToArray())
+                .Where(t => t.Name.EndsWith("Service"))
+                .AsSelf()
+                .AsImplementedInterfaces()
+                .PreserveExistingDefaults()
+                .SingleInstance()
+                .PropertiesAutowired();
 
             ApplicationContainer = builder.Build();
-            var a = ApplicationContainer.IsRegistered<IDatabaseService>();
-            var b = ApplicationContainer.IsRegistered<MongoDatabaseService>();
+            var isr = ApplicationContainer.IsRegistered<IDatabaseService>();
             ApplicationContainer.Resolve<InitializationService>().Start();
 
             return new AutofacServiceProvider(ApplicationContainer);
@@ -82,7 +99,18 @@ namespace Cynthia.Chat.Server
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
+            }
+            //app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseCookiePolicy();
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ChatHub>("/chathub");
+            });
             app.UseMvc();
         }
     }
