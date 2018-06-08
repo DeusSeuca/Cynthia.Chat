@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cynthia.Chat.Common\Cynthia.Chat.Common.csproj" />
+    <ProjectReference Include="..\Cynthia.DataBase.Common\Cynthia.DataBase.Common.csproj" />
   </ItemGroup>
 
 </Project>

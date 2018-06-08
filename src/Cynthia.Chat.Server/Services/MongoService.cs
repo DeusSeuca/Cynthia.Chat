@@ -37,27 +37,27 @@ namespace Cynthia.Chat.Server.Services
             Data.GetData(0).Skip(_strategy).To(DataToMongo);
             _strategy = Data.Count;
         }
-        public void DataToMongo(IEnumerable<JsonData> data)
+        public void DataToMongo(IEnumerable<ChatMessage> data)
         {
             //将集合中所有元素添加进数据库
             data.ForAll(x => x.To(DataToMongo));
         }
-        public void DataToMongo(JsonData data)
+        public void DataToMongo(ChatMessage data)
         {
             //将集合中所有元素添加进数据库
             var collection = GetCollection();
             collection.InsertOne(data);
         }
-        public IMongoCollection<JsonData> GetCollection()
+        public IMongoCollection<ChatMessage> GetCollection()
         {
             //获得数据库集合
-            return Client.GetDatabase(dataBaseName).GetMongoCollection<JsonData>(collectionName);
+            return Client.GetDatabase(dataBaseName).GetMongoCollection<ChatMessage>(collectionName);
         }
-        public IEnumerable<JsonData> GetEndData(int count)
+        public IEnumerable<ChatMessage> GetEndData(int count)
         {
             //获得数据库末尾的count条数据
             var collection = GetCollection();
-            var data = collection.AsQueryable<JsonData>().OrderByDescending(x => x.Time).Take(count).OrderBy(x => x.Time).AsEnumerable();
+            var data = collection.AsQueryable<ChatMessage>().OrderByDescending(x => x.Time).Take(count).OrderBy(x => x.Time).AsEnumerable();
             _strategy = data.Count();
             return data;
         }
@@ -65,14 +65,14 @@ namespace Cynthia.Chat.Server.Services
         {
             //获得数据库中总共的数据数量
             var collection = GetCollection();
-            return collection.AsQueryable<JsonData>().Count() + Data.Count - _strategy;
+            return collection.AsQueryable<ChatMessage>().Count() + Data.Count - _strategy;
         }
-        public IEnumerable<JsonData> GetPageData(int page, int count = 60)
+        public IEnumerable<ChatMessage> GetPageData(int page, int count = 60)
         {
             //获得某一页的数据  (每个的数量,和第几页  默认一页60条数据
             var collection = GetCollection();
             var pagecount = GetPageNum(count);
-            return collection.AsQueryable<JsonData>().OrderBy(x => x.Time).Skip(page * count).Take(count).AsEnumerable();
+            return collection.AsQueryable<ChatMessage>().OrderBy(x => x.Time).Skip(page * count).Take(count).AsEnumerable();
         }
         public int GetPageNum(int count = 60)
         {

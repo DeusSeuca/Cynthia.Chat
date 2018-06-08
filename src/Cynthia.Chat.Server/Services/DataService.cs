@@ -11,7 +11,7 @@ namespace Cynthia.Chat.Server.Services
     [Singleton]
     internal class DataService : IDataService
     {
-        private List<JsonData> ContextData = new List<JsonData>();
+        private List<ChatMessage> ContextData = new List<ChatMessage>();
         public int Count
         {
             get
@@ -19,15 +19,15 @@ namespace Cynthia.Chat.Server.Services
                 return ContextData.Count;
             }
         }
-        public void AddData(JsonData data)
+        public void AddData(ChatMessage data)
         {
             ContextData.Add(data);
         }
-        public void AddData(IEnumerable<JsonData> data)
+        public void AddData(IEnumerable<ChatMessage> data)
         {
             data.ForAll(x => ContextData.Add(x));
         }
-        public IEnumerable<JsonData> GetData(int count)
+        public IEnumerable<ChatMessage> GetData(int count)
         {
             return ContextData.Skip(count);
         }

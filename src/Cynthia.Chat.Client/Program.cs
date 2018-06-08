@@ -27,7 +27,7 @@ namespace Cynthia.Chat.Client
             Console.WriteLine("请输入在聊天室的名称~:");
             userName = Console.ReadLine();
             DataProcessing client = new DataProcessing();
-            client.Url = "http://cynthia.ovyno.com/api/chat/";
+            //client.Url = "http://cynthia.ovyno.com/api/chat/";
             Test(count, client);
             while (true)
             {
@@ -43,7 +43,7 @@ namespace Cynthia.Chat.Client
                 await Task.Delay(1000);
             }
         }
-        public static int PutData(IEnumerable<JsonData> data)
+        public static int PutData(IEnumerable<ChatMessage> data)
         {
             return data.Select(d => $"{d.Name}  {d.Time}\n {d.Content}\n---------------------------------").ForAll(Console.WriteLine).Count();
         }

@@ -22,14 +22,14 @@ namespace Cynthia.Chat.Server.Controllers
 
         // GET api/chat/5 获得某条之后的所有聊天记录
         [HttpGet("{count}")]
-        public IEnumerable<JsonData> Get(int count)
+        public IEnumerable<ChatMessage> Get(int count)
         {
             return ChatData.GetData(count);
         }
 
         // POST api/chat 将一条消息添加进聊天记录
         [HttpPost]
-        public void Post([FromBody]JsonData data)
+        public void Post([FromBody]ChatMessage data)
         {
             data.Time = DateTime.Now;
             ChatData.AddData(data);

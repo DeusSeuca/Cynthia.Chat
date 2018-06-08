@@ -5,9 +5,9 @@ namespace Cynthia.Chat.Server.Services
 {
     public interface IDataService
     {
-        void AddData(JsonData data);
-        void AddData(IEnumerable<JsonData> data);
+        void AddData(ChatMessage data);
+        void AddData(IEnumerable<ChatMessage> data);
         int Count { get; }
-        IEnumerable<JsonData> GetData(int count);
+        IEnumerable<ChatMessage> GetData(int count);
     }
 }
