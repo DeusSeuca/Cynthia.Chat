@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Cynthia.Chat.Server.Services;
 using Cynthia.Chat.Common.Models;
+using Alsein.Utilities.LifetimeAnnotations;
 
 namespace Cynthia.Chat.Server.Controllers
 {
+    [Singleton]
     [Route("api/[controller]")]
     public class ChatController : Controller
     {

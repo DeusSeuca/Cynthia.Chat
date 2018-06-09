@@ -1,9 +1,8 @@
-using System;
 using MongoDB.Driver;
 using Cynthia.Chat.Common;
 using System.Linq;
 using System.Collections.Generic;
-using Cynthia.Chat.Common.Attributes;
+using Alsein.Utilities.LifetimeAnnotations;
 
 namespace Cynthia.Chat.MongoDB
 {

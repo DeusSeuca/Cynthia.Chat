@@ -1,6 +1,4 @@
-using Autofac;
-using Cynthia.Chat.Common;
-using Cynthia.Chat.Common.Attributes;
+using Alsein.Utilities.LifetimeAnnotations;
 
 namespace Cynthia.Chat.Server.Services
 {

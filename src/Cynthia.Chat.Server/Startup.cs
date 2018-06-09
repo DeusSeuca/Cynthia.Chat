@@ -1,22 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using System.Reflection;
 using Cynthia.Chat.Server.Services;
 using MongoDB.Driver;
-using MongoDB.Bson;
-using Cynthia.Chat.Server.Controllers;
 using Cynthia.Chat.Common;
-using Cynthia.Chat.Common.Attributes;
 using Alsein.Utilities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -43,14 +36,12 @@ namespace Cynthia.Chat.Server
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddMvc().AddControllersAsServices();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().AddControllersAsServices().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSignalR();
             var builder = new ContainerBuilder();
             builder.Populate(services);
-            var assemblys = AssemblyManager.AllModuleAssemblies.ToArray();
             //控制器
-            builder.RegisterAssemblyTypes(assemblys)
+            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .Where(x => x.Name.EndsWith("Controller"))
                 .PropertiesAutowired();
             //服务
@@ -59,27 +50,7 @@ namespace Cynthia.Chat.Server
                 .As<IMongoClient>()
                 .PropertiesAutowired()
                 .AsSelf();
-            builder.RegisterAssemblyTypes(assemblys)
-                .Where(x => x.Name.EndsWith("Service") && x.IsDefined(typeof(SingletonAttribute)))
-                .PreserveExistingDefaults()
-                .PropertiesAutowired()
-                .SingleInstance()
-                .AsImplementedInterfaces()
-                .AsSelf();
-            builder.RegisterAssemblyTypes(assemblys)
-                .Where(x => x.Name.EndsWith("Service") && x.IsDefined(typeof(TransientAttribute)))
-                .PreserveExistingDefaults()
-                .PropertiesAutowired()
-                .InstancePerDependency()
-                .AsImplementedInterfaces()
-                .AsSelf();
-            builder.RegisterAssemblyTypes(assemblys)
-                .Where(x => x.Name.EndsWith("Service") && x.IsDefined(typeof(ScopedAttribute)))
-                .PreserveExistingDefaults()
-                .PropertiesAutowired()
-                .InstancePerLifetimeScope()
-                .AsImplementedInterfaces()
-                .AsSelf();
+            builder.RegisterAllServices();
 
             ApplicationContainer = builder.Build();
             var isr = ApplicationContainer.IsRegistered<IDatabaseService>();

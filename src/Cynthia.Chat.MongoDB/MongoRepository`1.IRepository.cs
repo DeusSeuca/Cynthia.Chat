@@ -30,7 +30,11 @@ namespace Cynthia.Chat.MongoDB
 
         public void Add(TModel item) => _collection.InsertOne(item.To(AutoId));
 
-        public void Add(IEnumerable<TModel> items) => _collection.InsertMany(items.Select(AutoId));
+        public void Add(IEnumerable<TModel> items)
+        {
+            if (items.Count() > 0)
+                _collection.InsertMany(items.Select(AutoId));
+        }
 
         public void Clear() => _collection.Database.DropCollection(Name);
 
