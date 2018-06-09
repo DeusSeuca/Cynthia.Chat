@@ -48,42 +48,38 @@ namespace Cynthia.Chat.Server
             services.AddSignalR();
             var builder = new ContainerBuilder();
             builder.Populate(services);
-
+            var assemblys = AssemblyManager.AllModuleAssemblies.ToArray();
             //控制器
-            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies().ToArray())
+            builder.RegisterAssemblyTypes(assemblys)
                 .Where(x => x.Name.EndsWith("Controller"))
                 .PropertiesAutowired();
             //服务
             builder.RegisterType<MongoClient>()
-                .WithParameter("connectionString", "mongodb://cynthia.ovyno.com:27017")
-                .AsImplementedInterfaces()
+                .WithParameter("connectionString", "mongodb://localhost:27017")
+                .As<IMongoClient>()
                 .PropertiesAutowired()
                 .AsSelf();
-            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies().ToArray())
+            builder.RegisterAssemblyTypes(assemblys)
                 .Where(x => x.Name.EndsWith("Service") && x.IsDefined(typeof(SingletonAttribute)))
+                .PreserveExistingDefaults()
                 .PropertiesAutowired()
                 .SingleInstance()
                 .AsImplementedInterfaces()
                 .AsSelf();
-            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies().ToArray())
+            builder.RegisterAssemblyTypes(assemblys)
                 .Where(x => x.Name.EndsWith("Service") && x.IsDefined(typeof(TransientAttribute)))
+                .PreserveExistingDefaults()
                 .PropertiesAutowired()
                 .InstancePerDependency()
                 .AsImplementedInterfaces()
                 .AsSelf();
-            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies().ToArray())
+            builder.RegisterAssemblyTypes(assemblys)
                 .Where(x => x.Name.EndsWith("Service") && x.IsDefined(typeof(ScopedAttribute)))
+                .PreserveExistingDefaults()
                 .PropertiesAutowired()
                 .InstancePerLifetimeScope()
                 .AsImplementedInterfaces()
                 .AsSelf();
-            builder.RegisterAssemblyTypes(AssemblyManager.AllModuleAssemblies.ToArray())
-                .Where(t => t.Name.EndsWith("Service"))
-                .AsSelf()
-                .AsImplementedInterfaces()
-                .PreserveExistingDefaults()
-                .SingleInstance()
-                .PropertiesAutowired();
 
             ApplicationContainer = builder.Build();
             var isr = ApplicationContainer.IsRegistered<IDatabaseService>();
