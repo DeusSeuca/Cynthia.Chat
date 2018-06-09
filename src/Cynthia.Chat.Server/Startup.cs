@@ -55,7 +55,7 @@ namespace Cynthia.Chat.Server
                 .PropertiesAutowired();
             //服务
             builder.RegisterType<MongoClient>()
-                .WithParameter("connectionString", "mongodb://localhost:27017")
+                .WithParameter("connectionString", "mongodb://cynthia.ovyno.com:27017")
                 .As<IMongoClient>()
                 .PropertiesAutowired()
                 .AsSelf();
